@@ -1,0 +1,62 @@
+{
+  "name": "tung-project",
+  "version": "0.1.0",
+	"engines": {
+		"node": "16.x",
+		"npm": "8.x"
+	},
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "antd": "^4.21.5",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "postgresql": "^0.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.3.5",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "rest-client": "^0.1.5",
+    "sequelize": "^6.21.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development && node index.js",
+    "build": "react-scripts build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eject": "react-scripts eject",
+    "pg:init": "pg_ctl init -D data",
+    "pg:start": "pg_ctl -D data start",
+    "pg:createdb": "createdb -h 127.0.0.1 app",
+    "pg:stop": "pg_ctl -D data stop",
+		"seed_data" : "node database.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:3000",
+  "homepage": "/"
+}

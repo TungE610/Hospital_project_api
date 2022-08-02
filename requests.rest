@@ -1,0 +1,35 @@
+
+GET http://localhost:5000/users
+###
+
+POST http://localhost:5000/users 
+Content-Type: application/json
+
+{
+	"email" : "tung2082002@gmail.com",
+	"password": "20082002"
+}
+###
+
+POST http://localhost:5000/users/login 
+Content-Type: application/json
+
+{
+	"email" : "tung2082002@gmail.com",
+	"password": "1111"
+}
+
+### 
+
+GET http://localhost:5000/users/login
+###
+
+POST http://localhost:5000/doctors/delete/20225
+
+###
+
+GET http://localhost:5000/doctors
+
+###
+
+GET http://localhost:5000/appointments
