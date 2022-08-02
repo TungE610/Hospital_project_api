@@ -2,11 +2,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
-const pool = require('./app/config/db.config')
+const pool = require('../src/app/config/db.config')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
-app.listen(process.env.PORT || 5000, () => {
-	console.log("The server is running in 5000")
+app.listen(process.env.DB_PORT || 5000, () => {
+	console.log("The server is running in port")
 })
 /// middleware
 app.use(cors())

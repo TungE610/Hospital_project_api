@@ -35,7 +35,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "NODE_ENV=development && node index.js",
+    "start": "NODE_ENV=development && node src/index.js",
     "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eject": "react-scripts eject",
@@ -43,7 +43,7 @@
     "pg:start": "pg_ctl -D data start",
     "pg:createdb": "createdb -h 127.0.0.1 app",
     "pg:stop": "pg_ctl -D data stop",
-    "seed_data": "node database.js"
+    "seed_data": "nodemon src/database.js"
   },
   "eslintConfig": {
     "extends": [
