@@ -1,10 +1,10 @@
 {
   "name": "tung-project",
   "version": "0.1.0",
-	"engines": {
-		"node": "16.x",
-		"npm": "8.x"
-	},
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -37,7 +37,7 @@
     "pg:start": "pg_ctl -D data start",
     "pg:createdb": "createdb -h 127.0.0.1 app",
     "pg:stop": "pg_ctl -D data stop",
-		"seed_data" : "node database.js"
+    "seed_data": "node database.js"
   },
   "eslintConfig": {
     "extends": [
@@ -58,5 +58,8 @@
     ]
   },
   "proxy": "http://localhost:3000",
-  "homepage": "/"
+  "homepage": "/",
+  "devDependencies": {
+    "dotenv-webpack": "^8.0.0"
+  }
 }
