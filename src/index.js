@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
-const pool = require('../app/config/db.config')
+const pool = require('./app/config/db.config')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 app.listen(process.env.PORT || 5000, () => {
