@@ -5,7 +5,7 @@ const cors = require('cors')
 const pool = require('../src/app/config/db.config')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
-app.listen(process.env.DB_PORT || 5000, () => {
+app.listen(5432, () => {
 	console.log("The server is running in port")
 })
 /// middleware
@@ -99,7 +99,7 @@ app.post('/patients', async (req, res) => {
 
 //// get all doctor 
 
-app.get('/doctors', async (req, res) => {
+app.get('/api/doctors', async (req, res) => {
 	try {
 		const allDoctors = await pool.query('SELECT doctor_id, doctor_name, age, status,room_id, specialty.specialty FROM doctor, specialty WHERE doctor.specialty_id = specialty.specialty_id');
 		res.json(allDoctors.rows)
