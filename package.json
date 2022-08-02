@@ -43,7 +43,7 @@
     "pg:start": "pg_ctl -D data start",
     "pg:createdb": "createdb -h 127.0.0.1 app",
     "pg:stop": "pg_ctl -D data stop",
-    "seed_data": "nodemon src/database.js"
+    "seed_data": "node src/database.js"
   },
   "eslintConfig": {
     "extends": [

@@ -20,7 +20,7 @@ SET row_security = off;
 -- Name: des_num_of_waiting(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.des_num_of_waiting() RETURNS trigger
+CREATE OR REPLACE FUNCTION public.des_num_of_waiting() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE oldNumWaiting int4;
@@ -37,7 +37,7 @@ $$;
 -- Name: inc_num_of_waiting(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.inc_num_of_waiting() RETURNS trigger
+CREATE OR REPLACE FUNCTION public.inc_num_of_waiting() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE specialtyId text;
@@ -57,7 +57,7 @@ $$;
 -- Name: update_doctor_status(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.update_doctor_status() RETURNS trigger
+CREATE OR REPLACE FUNCTION public.update_doctor_status() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 BEGIN
@@ -74,7 +74,7 @@ $$;
 -- Name: update_num_of_waiting(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.update_num_of_waiting() RETURNS trigger
+CREATE OR REPLACE FUNCTION public.update_num_of_waiting() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE specialtyId text;
@@ -94,7 +94,7 @@ $$;
 -- Name: update_room_status(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.update_room_status() RETURNS trigger
+CREATE OR REPLACE FUNCTION public.update_room_status() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE roomID text;
@@ -484,35 +484,35 @@ CREATE INDEX specialty_id_index ON public.specialty USING btree (specialty_id);
 -- Name: appointment af_insert_app; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER af_insert_app AFTER INSERT OR UPDATE OF end_time ON public.appointment FOR EACH ROW EXECUTE FUNCTION public.update_doctor_status();
+CREATE OR REPLACE TRIGGER af_insert_app AFTER INSERT OR UPDATE OF end_time ON public.appointment FOR EACH ROW EXECUTE FUNCTION public.update_doctor_status();
 
 
 --
 -- Name: appointment des_num_of_wt; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER des_num_of_wt AFTER INSERT ON public.appointment FOR EACH ROW EXECUTE FUNCTION public.des_num_of_waiting();
+CREATE OR REPLACE TRIGGER des_num_of_wt AFTER INSERT ON public.appointment FOR EACH ROW EXECUTE FUNCTION public.des_num_of_waiting();
 
 
 --
 -- Name: registration inc_num_of_wt; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER inc_num_of_wt BEFORE INSERT ON public.registration FOR EACH ROW EXECUTE FUNCTION public.inc_num_of_waiting();
+CREATE OR REPLACE TRIGGER inc_num_of_wt BEFORE INSERT ON public.registration FOR EACH ROW EXECUTE FUNCTION public.inc_num_of_waiting();
 
 
 --
 -- Name: appointment ins_num_of_wt; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER ins_num_of_wt BEFORE INSERT ON public.appointment FOR EACH ROW EXECUTE FUNCTION public.update_num_of_waiting();
+CREATE OR REPLACE TRIGGER ins_num_of_wt BEFORE INSERT ON public.appointment FOR EACH ROW EXECUTE FUNCTION public.update_num_of_waiting();
 
 
 --
 -- Name: doctor up_rst_af_insert_app; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER up_rst_af_insert_app AFTER UPDATE ON public.doctor FOR EACH ROW EXECUTE FUNCTION public.update_room_status();
+CREATE OR REPLACE TRIGGER up_rst_af_insert_app AFTER UPDATE ON public.doctor FOR EACH ROW EXECUTE FUNCTION public.update_room_status();
 
 
 --

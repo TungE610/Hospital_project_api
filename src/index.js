@@ -6,7 +6,7 @@ const pool = require('../src/app/config/db.config')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 app.listen(process.env.DB_PORT || 5000, () => {
-	console.log("The server is running in port")
+	console.log(`The server is running in ${process.env.DB_PORT}`)
 })
 /// middleware
 app.use(cors())
