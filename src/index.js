@@ -20,7 +20,7 @@ app.get('/users', (req,res) => {
 })
 
 
-app.post('/users', async (req,res) => {
+app.post('/api/users', async (req,res) => {
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10)
 		const user = {email : req.body.email, password : hashedPassword}
@@ -31,7 +31,7 @@ app.post('/users', async (req,res) => {
 	}
 })
 
-app.get('/users/login', async (req,res) => {
+app.get('/api/users/login', async (req,res) => {
 	try {
   const allUsers = await pool.query('SELECT * FROM accounts')
 	const hashedUsers = await Promise.all(
@@ -52,7 +52,7 @@ app.get('/users/login', async (req,res) => {
 	}
 })
 
-app.post('/users', async (req,res) => {
+app.post('/api/users', async (req,res) => {
 		try {
 			const hashedPassword = await bcrypt.hash(req.body.password, 10)
 			const user = {name : req.body.name, password : hashedPassword}
@@ -64,7 +64,7 @@ app.post('/users', async (req,res) => {
 	})
 
 
-app.post('/users/login', async (req,res) => {
+app.post('/api/users/login', async (req,res) => {
 	const user = users.find(user => user.email === req.body.email)
 	if(user == null ) {
 		return res.status(400).send('Cant not find user')
@@ -87,7 +87,7 @@ app.post('/users/login', async (req,res) => {
 	}
 })
 
-app.post('/patients', async (req, res) => {
+app.post('/api/patients', async (req, res) => {
 	try {
 		const { patient_name, sex, age, dob, address, phone_number, status_of_insurance, medical_history, citizen_id  } = req.body;
 		const patient_id =`${citizen_id.slice(-4)}${dob.slice(-5).replace('-','')}`
@@ -110,7 +110,7 @@ app.get('/api/doctors', async (req, res) => {
 })
 
 /// get a specific doctor with doctorI or name
-app.get('/doctors/:column/:value', async (req, res) => {
+app.get('/api/doctors/:column/:value', async (req, res) => {
 	const { column, value } = req.params;
 	if(column === 'doctor_id'){
 		try {
@@ -132,7 +132,7 @@ app.get('/doctors/:column/:value', async (req, res) => {
 })
 /////delete a doctor 
 
-app.post('/doctors/delete/:doctor_id', async (req, res) => {
+app.post('/api/doctors/delete/:doctor_id', async (req, res) => {
 	try {
 		const { doctor_id } = req.params;
 		const allDoctors = await pool.query('DELETE FROM doctor WHERE doctor_id = $1', [doctor_id]);
@@ -146,7 +146,7 @@ app.post('/doctors/delete/:doctor_id', async (req, res) => {
 
 /// get a specific doctor with doctorI or name
 
-app.get('/rooms/:column/:value', async (req, res) => {
+app.get('/api/rooms/:column/:value', async (req, res) => {
 	const { column, value } = req.params;
 	if(column === 'room_id'){
 		try {
@@ -167,7 +167,7 @@ app.get('/rooms/:column/:value', async (req, res) => {
 	}
 })
 /// get all rooms
-app.get('/rooms', async (req, res) => {
+app.get('/api/rooms', async (req, res) => {
 	try {
 		const allRooms = await pool.query('SELECT room.room_id,room.status, num_of_waiting, doctor.doctor_name AS manager ,specialty FROM room, specialty, doctor WHERE room.specialty_id = specialty.specialty_id AND room.manager_id = doctor.doctor_id');
 		res.json(allRooms.rows)
@@ -177,7 +177,7 @@ app.get('/rooms', async (req, res) => {
 })
 /// get a specify room with roomID
 
-app.get('/rooms/:roomId', async (req, res) => {
+app.get('/api/rooms/:roomId', async (req, res) => {
 	try {
 		const { roomId } = req.params;
 		const room = await pool.query('SELECT doctor.doctor_id,doctor.status, doctor.doctor_name, age FROM doctor, room WHERE doctor.room_id = room.room_id AND doctor.room_id = $1', [roomId]);
@@ -193,7 +193,7 @@ app.get('/rooms/:roomId', async (req, res) => {
 
 //////add an registration
 
-app.post('/registrations', async(req, res) => {
+app.post('/api/registrations', async(req, res) => {
 	try {
 		const { specialty_id, patient_id, registration_time, expected_time ,room_id} = req.body;
 		const newRegistration = await pool.query('INSERT INTO registration (specialty_id, patient_id, registration_time, expected_time, room_id) VALUES ($1, $2, $3, $4, $5)', [specialty_id, patient_id, registration_time, expected_time, room_id])
@@ -204,7 +204,7 @@ app.post('/registrations', async(req, res) => {
 })
 
 //// find first waiting in room 
-app.get('/registrations/:room_id', async(req, res) => {
+app.get('/api/registrations/:room_id', async(req, res) => {
 	try {
 		const {room_id} =req.params
 		console.log(room_id)
@@ -216,7 +216,7 @@ app.get('/registrations/:room_id', async(req, res) => {
 })
 
 ////get all appointment
-app.get('/appointments', async (req, res) => {
+app.get('/api/appointments', async (req, res) => {
 	try {
 		const allAppointments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.expected_time, diagnosis ,specialty.specialty,room_id,appointment.patient_id,patient.status_of_insurance, doctor_id FROM appointment,patient,specialty WHERE appointment.patient_id = patient.patient_id AND appointment.specialty_id = specialty.specialty_id AND appointment.end_time IS NULL');
 		res.json(allAppointments.rows)
@@ -227,7 +227,7 @@ app.get('/appointments', async (req, res) => {
 
 ////add an appointment 
 
-app.post('/appointments', async(req, res) => {
+app.post('/api/appointments', async(req, res) => {
 	try {
 		const { appointment_id, doctor_id, patient_id, specialty_id, room_id, start_time } = req.body;
 		const newAppointment = await pool.query('INSERT INTO appointment (appointment_id, doctor_id, patient_id,specialty_id,room_id, start_time) VALUES ($1, $2, $3, $4, $5, $6)', [appointment_id, doctor_id, patient_id,specialty_id, room_id, start_time])
@@ -237,7 +237,7 @@ app.post('/appointments', async(req, res) => {
 	}
 })
 
-app.get('/appointments/:appointment_id', async (req, res) => {
+app.get('/api/appointments/:appointment_id', async (req, res) => {
 	try {
 		const { appointment_id } = req.params
 		const appointments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.expected_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment.appointment_id = $1',[appointment_id])
@@ -246,7 +246,7 @@ app.get('/appointments/:appointment_id', async (req, res) => {
 		console.log(error.message)
 	}
 })
-app.post('/appointments/:appointment_id', async (req, res) => {
+app.post('/api/appointments/:appointment_id', async (req, res) => {
 	try {
 		const { appointment_id } = req.params
 		const appointments = await pool.query('UPDATE appointment SET diagnosis = $1, expected_time = $2 WHERE appointment_id = $3',[req.body.diagnosis,req.body.expected_time, appointment_id])
@@ -257,7 +257,7 @@ app.post('/appointments/:appointment_id', async (req, res) => {
 })
 
 
-app.post('/appointments/end_up/:appointment_id', async (req,res) => {
+app.post('/api/appointments/end_up/:appointment_id', async (req,res) => {
 	try {
 		const { appointment_id } = req.params
 		console.log(appointment_id, req.body.end_time)
@@ -279,7 +279,7 @@ app.post('/appointments/end_up/:appointment_id', async (req,res) => {
 // 	}
 // })
 ///// get specific appointment with id or doctor_id or specialty or appointment_id
-app.get('/appointments/:column/:value', async (req, res) => {
+app.get('/api/appointments/:column/:value', async (req, res) => {
 	const { column, value } = req.params;
 	console.log(column, value)
 	if(column === 'appointment_id'){
@@ -309,7 +309,7 @@ app.get('/appointments/:column/:value', async (req, res) => {
 	}
 })
 ////get available doctors
-app.get('/room/:id', async(req, res) => {
+app.get('/api/room/:id', async(req, res) => {
 	try {
 		const { id } = req.params;
 		const availableDoctor = await pool.query("SELECT doctor_id FROM doctor WHERE room_id = $1 AND status = true", [id])
@@ -319,7 +319,7 @@ app.get('/room/:id', async(req, res) => {
 	}
 })
 //// get min waiting room of specialty
-app.get('/room/min_wait/:specialty_id', async(req, res) => {
+app.get('/api/room/min_wait/:specialty_id', async(req, res) => {
 	try {
 		const { specialty_id } = req.params;
 		const minWait = await pool.query("SELECT room_id FROM room WHERE room.specialty_id = $1 ORDER BY num_of_waiting ASC LIMIT 1 ", [specialty_id])
@@ -330,7 +330,7 @@ app.get('/room/min_wait/:specialty_id', async(req, res) => {
 })
 
 //// get a available room 
-app.get('/specialties/:id', async(req, res) => {
+app.get('/api/specialties/:id', async(req, res) => {
 	try {
 		const { id } = req.params;
 		const availableRooms = await pool.query("SELECT room.room_id FROM room, specialty WHERE room.specialty_id = specialty.specialty_id AND specialty.specialty_id = $1 AND room.status = 't'", [id])
@@ -342,7 +342,7 @@ app.get('/specialties/:id', async(req, res) => {
 
 
 /// get all medicine name and cost 
-app.get('/medicals', async(req, res) => {
+app.get('/api/medicals', async(req, res) => {
 	try {
 		const medicals = await pool.query("SELECT medical_id,medical_name, cost  FROM medical")
 		res.json(medicals.rows)
@@ -353,7 +353,7 @@ app.get('/medicals', async(req, res) => {
 
 //// make a bill
 
-app.post('/bills', async (req, res) => {
+app.post('/api/bills', async (req, res) => {
 	try {
 		console.log(req.body)
 		const bill = await pool.query('INSERT INTO bill(bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges,total_charges) VALUES ($1, $2, $3, $4, $5, $6, $7)',[req.body.bill_id, req.body.appointment_id, req.body.patient_id, req.body.examination_fee, req.body.medicine_fee, req.body.discounted_charges, req.body.total_charges])
@@ -363,7 +363,7 @@ app.post('/bills', async (req, res) => {
 	}
 })
 
-app.post('/medicines', async (req, res) => {
+app.post('/api/medicines', async (req, res) => {
 	try {
 		console.log(req.body)
 		const medicine = await pool.query('INSERT INTO medicine(medical_id, bill_id, quantity) VALUES ($1, $2, $3)',[req.body.medical_id, req.body.bill_id,req.body.quantity])
