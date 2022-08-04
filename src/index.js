@@ -44,7 +44,8 @@ app.get('/api/users/login', async (req,res) => {
 			room_id : user.room_id
 		}
 	}))
-		users.push(...hashedUsers)	
+		users.push(...hashedUsers)
+		res.json(users)
 		res.status(200).send()
 	}catch{
 // 		console.log(error.message)
