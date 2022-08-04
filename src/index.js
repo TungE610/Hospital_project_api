@@ -28,7 +28,9 @@ app.post('/api/users', async (req,res) => {
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10)
 		const user = {email : req.body.email, password : hashedPassword}
-		users.push(user)
+		if(users.findIndex(item => item.email === user.email) === -1) {
+			users.push(user)
+		}
 		res.status(201).send()
 	}catch(error){
 		console.log(error.message)
