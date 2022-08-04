@@ -15,7 +15,7 @@ app.use(express.json())
 
 
 const users = []
-app.get('/users', (req,res) => {
+app.get('/api/users', (req,res) => {
 	res.json(users)
 })
 
@@ -45,8 +45,7 @@ app.get('/api/users/login', async (req,res) => {
 		}
 	}))
 		users.push(...hashedUsers)	
-
-		res.status(201).send()
+		res.status(200).send()
 	}catch{
 // 		console.log(error.message)
 	}
