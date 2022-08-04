@@ -9,8 +9,12 @@ const port = process.env.PORT || 5000
 app.listen(port, () => {
 	console.log(`The server is running in ${process.env.DB_PORT}`)
 })
-/// middleware
-app.use(cors())
+const corsOptions ={
+	origin:'*', 
+	credentials:true,            //access-control-allow-credentials:true
+	optionSuccessStatus:200,
+}
+app.use(cors(corsOptions))
 app.use(express.json())
 
 
