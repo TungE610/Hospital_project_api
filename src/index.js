@@ -73,7 +73,7 @@ app.post('/api/users', async (req,res) => {
 
 app.post('/api/users/login', async (req,res) => {
 	const user = users.find(user => user.email === req.body.email)
-	console.log(user)
+	console.log("user", user)
 	if(user == null ) {
 		return res.status(401).send('Cant not find user')
 	} 
