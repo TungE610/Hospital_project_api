@@ -52,6 +52,7 @@ app.get('/api/users/login', async (req,res) => {
 	}))
 	  users.splice(0, users.length)
 		users.push(...hashedUsers)
+		res.json(users)
 		res.status(200).send()
 	}catch{
 // 		console.log(error.message)
