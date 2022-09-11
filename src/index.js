@@ -38,14 +38,6 @@ app.use(sessions({
     resave: false 
 }));
 
-app.get('/Login',(req,res) => {
-	console.log("Come in")
-	session=req.session;
-	if(session.userid){
-			console.log("Welcome User <a href=\'/logout'>click to logout</a>");
-	}else
-			console.log("fails");
-});
 
 app.post('/api/users', async (req,res) => {
 	try {
@@ -95,6 +87,8 @@ app.post('/api/users', async (req,res) => {
 
 
 app.post('/api/users/login', async (req,res) => {
+
+
 	const user = users.find(user => user.email === req.body.email)
 	console.log("user", user)
 	if(user == null ) {
@@ -102,6 +96,9 @@ app.post('/api/users/login', async (req,res) => {
 	} 
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)){
+			session=req.session;
+			session.userid=req.body.email;
+			console.log(req.session)
 			res.send(
 				{ email : user.email, 
 					password : user.password,
