@@ -131,6 +131,7 @@ app.post('/api/patients', async (req, res) => {
 
 app.get('/api/doctors', async (req, res) => {
 	try {
+		console.log("get doctors")
 		const allDoctors = await pool.query('SELECT doctor_id, doctor_name, age, status,room_id, specialty.specialty FROM doctor, specialty WHERE doctor.specialty_id = specialty.specialty_id');
 		res.json(allDoctors.rows)
 	}catch(error) {
