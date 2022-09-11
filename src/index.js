@@ -96,6 +96,7 @@ app.post('/api/users/login', async (req,res) => {
 	} 
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)){
+			console.log("success")
 			session=req.session;
 			session.userid=req.body.email;
 			console.log(req.session)
