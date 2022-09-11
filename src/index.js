@@ -88,7 +88,7 @@ app.post('/api/users', async (req,res) => {
 
 app.post('/api/users/login', async (req,res) => {
 
-
+	console.log("come in")
 	const user = users.find(user => user.email === req.body.email)
 	console.log("user", user)
 	if(user == null ) {
