@@ -1,6 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
+var session;
 const cors = require('cors')
 const pool = require('../src/app/config/db.config')
 require('dotenv').config()
@@ -16,6 +19,9 @@ const corsOptions ={
 }
 app.use(cors(corsOptions))
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
+app.use(cookieParser());
 
 
 const users = []
@@ -23,6 +29,23 @@ app.get('/api/users', (req,res) => {
 	res.json(users)
 })
 
+
+const twoMinute = 1000 * 60 * 2;
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: twoMinute },
+    resave: false 
+}));
+
+app.get('/Login',(req,res) => {
+	console.log("Come in")
+	session=req.session;
+	if(session.userid){
+			console.log("Welcome User <a href=\'/logout'>click to logout</a>");
+	}else
+			console.log("fails");
+});
 
 app.post('/api/users', async (req,res) => {
 	try {
@@ -380,3 +403,9 @@ app.post('/api/medicines', async (req, res) => {
 		console.log(error.message)
 	}
 })
+
+
+app.get('/logout',(req,res) => {
+	req.session.destroy();
+	res.redirect('/');
+});
