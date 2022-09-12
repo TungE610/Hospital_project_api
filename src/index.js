@@ -20,23 +20,14 @@ const corsOptions ={
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
-app.use(cookieParser());
+// app.use(express.static(__dirname));
+// app.use(cookieParser());
 
 
 const users = []
 app.get('/api/users', (req,res) => {
 	res.json(users)
 })
-
-
-const twoMinute = 1000 * 60 * 2;
-app.use(sessions({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-    saveUninitialized:true,
-    cookie: { maxAge: twoMinute },
-    resave: false 
-}));
 
 
 app.post('/api/users', async (req,res) => {
