@@ -2,8 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const cookieParser = require("cookie-parser");
-// const sessions = require('express-session');
-// var session;
 const cors = require('cors')
 const pool = require('../src/app/config/db.config')
 require('dotenv').config()
@@ -19,9 +17,8 @@ const corsOptions ={
 }
 app.use(cors(corsOptions))
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(__dirname));
-// app.use(cookieParser());
+app.use(cookieParser());
 
 
 const users = []
@@ -86,6 +83,12 @@ app.post('/api/users/login', async (req,res) => {
 	} 
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)){
+			response.cookie('email', user.email, {
+				maxAge: 60 * 60 * 1000, // 1 hour
+				httpOnly: true,
+				secure: true,
+				sameSite: true,
+			})
 			res.send(
 				{ email : user.email, 
 					password : user.password,
