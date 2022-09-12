@@ -88,19 +88,13 @@ app.post('/api/users', async (req,res) => {
 
 app.post('/api/users/login', async (req,res) => {
 
-	console.log("come in")
 	const user = users.find(user => user.email === req.body.email)
-	console.log("user", user)
 	if(user == null ) {
 		console.log("fails")
 		return res.status(401).send('Cant not find user')
 	} 
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)){
-			console.log("success")
-			session=req.session;
-			session.userid=req.body.email;
-			console.log(req.session)
 			res.send(
 				{ email : user.email, 
 					password : user.password,
