@@ -346,7 +346,7 @@ app.get('/api/room/min_wait/:specialty_id', async(req, res) => {
 app.get('/api/specialties/:id', async(req, res) => {
 	try {
 		const { id } = req.params;
-		const availableRooms = await pool.query("SELECT room.room_id FROM room, specialty WHERE room.specialty_id = specialty.specialty_id AND specialty.specialty_id = $1 AND room.status = 't'", [id])
+		const availableRooms = await pool.query("SELECT room.room_id, room.num_of_waiting FROM room, specialty WHERE room.specialty_id = specialty.specialty_id AND specialty.specialty_id = $1 AND room.status = 't'", [id])
 		res.json(availableRooms.rows[0])
 	}catch(error) {
 		console.log(error.message)
