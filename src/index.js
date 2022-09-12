@@ -2,8 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const cookieParser = require("cookie-parser");
-const sessions = require('express-session');
-var session;
+// const sessions = require('express-session');
+// var session;
 const cors = require('cors')
 const pool = require('../src/app/config/db.config')
 require('dotenv').config()
