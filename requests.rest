@@ -1,7 +1,8 @@
 
 GET https://hospital-project-api.herokuapp.com/api/users
 ###
-
+GET https://hospital-project-api.herokuapp.com/api/users/login
+###
 POST http://localhost:5000/users 
 Content-Type: application/json
 
@@ -21,7 +22,13 @@ Content-Type: application/json
 
 ### 
 
-GET https://hospital-project-api.herokuapp.com/api/users/login
+POST https://hospital-project-api.herokuapp.com/api/users/login
+Content-Type: application/json
+
+{
+	"email" : "doctor@gmail.com",
+	"password": "11111111"
+}
 ###
 
 POST http://localhost:5000/doctors/delete/20225
