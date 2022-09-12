@@ -18,7 +18,7 @@ const corsOptions ={
 app.use(cors(corsOptions))
 app.use(express.json())
 // app.use(express.static(__dirname));
-app.use(cookieParser());
+// app.use(cookieParser());
 
 
 const users = []
@@ -83,12 +83,6 @@ app.post('/api/users/login', async (req,res) => {
 	} 
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)){
-			res.cookie('email', user.email, {
-				maxAge: 60 * 60 * 1000, // 1 hour
-				httpOnly: true,
-				secure: true,
-				sameSite: true,
-			})
 			res.send(
 				{ email : user.email, 
 					password : user.password,
