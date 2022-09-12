@@ -83,7 +83,7 @@ app.post('/api/users/login', async (req,res) => {
 	} 
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)){
-			response.cookie('email', user.email, {
+			res.cookie('email', user.email, {
 				maxAge: 60 * 60 * 1000, // 1 hour
 				httpOnly: true,
 				secure: true,
