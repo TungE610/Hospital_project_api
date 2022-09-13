@@ -208,8 +208,8 @@ app.get('/api/rooms/:roomId', async (req, res) => {
 
 app.post('/api/registrations', async(req, res) => {
 	try {
-		const { specialty_id, patient_id, registration_time, expected_time ,room_id} = req.body;
-		const newRegistration = await pool.query('INSERT INTO registration (specialty_id, patient_id, registration_time, expected_time, room_id) VALUES ($1, $2, $3, $4, $5)', [specialty_id, patient_id, registration_time, expected_time, room_id])
+		const { specialty_id, patient_id, registration_time, expected_time ,room_id, status} = req.body;
+		const newRegistration = await pool.query('INSERT INTO registration (specialty_id, patient_id, registration_time, expected_time, room_id, status) VALUES ($1, $2, $3, $4, $5, $6)', [specialty_id, patient_id, registration_time, expected_time, room_id, status])
 		res.json(newRegistration)
 	}catch(error) {
 		console.log(error.message)
@@ -335,7 +335,7 @@ app.get('/api/room/:id', async(req, res) => {
 app.get('/api/room/min_wait/:specialty_id', async(req, res) => {
 	try {
 		const { specialty_id } = req.params;
-		const minWait = await pool.query("SELECT room_id FROM room WHERE room.specialty_id = $1 ORDER BY num_of_waiting ASC LIMIT 1 ", [specialty_id])
+		const minWait = await pool.query("SELECT room_id, num_of_waiting FROM room WHERE room.specialty_id = $1 ORDER BY num_of_waiting ASC LIMIT 1 ", [specialty_id])
 		res.json(minWait.rows[0])
 	}catch(error) {
 		console.log(error.message)
