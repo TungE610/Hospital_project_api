@@ -231,7 +231,7 @@ app.get('/api/registrations/:room_id', async(req, res) => {
 ////get all appointment
 app.get('/api/appointments', async (req, res) => {
 	try {
-		const allAppointments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.expected_time, diagnosis ,specialty.specialty,room_id,appointment.patient_id,patient.status_of_insurance, doctor_id FROM appointment,patient,specialty WHERE appointment.patient_id = patient.patient_id AND appointment.specialty_id = specialty.specialty_id AND appointment.end_time IS NULL');
+		const allAppointments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.end_time, diagnosis ,specialty.specialty,room_id,appointment.patient_id,patient.status_of_insurance, doctor_id FROM appointment,patient,specialty WHERE appointment.patient_id = patient.patient_id AND appointment.specialty_id = specialty.specialty_id AND appointment.end_time IS NULL');
 		res.json(allAppointments.rows)
 	}catch(error) {
 		console.log(error.message)
@@ -262,10 +262,10 @@ app.get('/api/appointments/:appointment_id', async (req, res) => {
 app.post('/api/appointments/:appointment_id', async (req, res) => {
 	try {
 		const { appointment_id } = req.params
-		const appointments = await pool.query('UPDATE appointment SET diagnosis = $1, expected_time = $2 WHERE appointment_id = $3',[req.body.diagnosis,req.body.expected_time, appointment_id])
+		const appointments = await pool.query('UPDATE appointment SET diagnosis = $1 WHERE appointment_id = $2',[req.body.diagnosis, appointment_id])
 		res.json(appointments)
 	}catch(error){
-		console.log("100",error.message)
+		console.log(error.message)
 	}
 })
 
