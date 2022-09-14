@@ -368,7 +368,8 @@ app.get('/api/medicals', async(req, res) => {
 app.post('/api/bills', async (req, res) => {
 	try {
 		console.log("body:", req.body)
-		const bill = await pool.query('INSERT INTO bill(bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',[req.body.bill_id, req.body.appointment_id, req.body.patient_id, req.body.examination_fee, req.body.medicine_fee, req.body.discounted_charges, req.body.total_charges, req.body.date_time])
+		const { bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time } = req.body;
+		const bill = await pool.query('INSERT INTO bill(bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',[bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time])
 		res.json(bill)
 	}catch(error){
 		console.log(error.message)
