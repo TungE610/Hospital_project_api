@@ -1,11 +1,10 @@
-import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 const express = require('express')
+require('dotenv').config()
 const bodyParser = require('body-parser')
 const app = express()
 const cookieParser = require("cookie-parser");
 const cors = require('cors')
 const pool = require('../src/app/config/db.config')
-require('dotenv').config()
 const bcrypt = require('bcrypt')
 console.log(process.env.DB_PORT)
 app.listen(process.env.DB_PORT || 5000, () => {
