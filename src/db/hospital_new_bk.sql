@@ -615,4 +615,4 @@
 -- -- PostgreSQL database dump complete
 -- --
 
-DELETE FROM  bill WHERE bill_id = '10000005'
+SELECT * FROM appointment WHERE appointment_id = '05030914'

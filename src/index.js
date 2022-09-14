@@ -255,7 +255,7 @@ app.post('/api/appointments', async(req, res) => {
 app.get('/api/appointments/:appointment_id', async (req, res) => {
 	try {
 		const { appointment_id } = req.params
-		const appointments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.expected_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment.appointment_id = $1',[appointment_id])
+		const appointments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment.appointment_id = $1',[appointment_id])
 		res.json(appointments.rows[0])
 	}catch(error){
 		console.log(error.message)
