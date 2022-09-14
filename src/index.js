@@ -6,10 +6,9 @@ const cors = require('cors')
 const pool = require('../src/app/config/db.config')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
-console.log(process.env.DB_PORT)
 const port = process.env.DB_PORT || 5000
 app.listen(port, () => {
-	console.log(`The server is running in ${port}`)
+	console.log(`The server is running in ${process.env.DB_PORT}`)
 })
 const corsOptions ={
 	origin:'*', 
@@ -369,6 +368,7 @@ app.get('/api/medicals', async(req, res) => {
 
 app.post('/api/bills', async (req, res) => {
 	try {
+		console.log(req.body)
 		const bill = await pool.query('INSERT INTO bill(bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time) VALUES ($1, $2, $3, $4, $5, $6. $7, $8)',[req.body.bill_id, req.body.appointment_id, req.body.patient_id, req.body.examination_fee, req.body.medicine_fee, req.body.discounted_charges, req.body.total_charges, req.body.date_time])
 		res.json(bill)
 	}catch(error){
