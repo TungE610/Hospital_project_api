@@ -381,11 +381,11 @@ app.post('/api/bills', async (req, res) => {
 
 app.post('/api/medicines', async (req, res) => {
 	try {
-		console.log(req.body)
+		console.log(req)
 		const medicine = await pool.query('INSERT INTO medicine(medical_id, bill_id, quantity) VALUES ($1, $2, $3)',[req.body.medical_id, req.body.bill_id,req.body.quantity])
 		res.json(medicine)
 	}catch(error){
-		console.log(error.message)
+		console.log(error)
 	}
 })
 
