@@ -15,7 +15,10 @@ const corsOptions ={
 	optionSuccessStatus:200,
 }
 app.use(cors(corsOptions))
+app.use(bodyParser.json())
 app.use(express.json())
+app.use(express.text())
+
 // app.use(express.static(__dirname));
 // app.use(cookieParser());
 
@@ -35,7 +38,7 @@ app.post('/api/users', async (req,res) => {
 		}
 		res.status(201).send()
 	}catch(error){
-		console.log(error.message)
+		console.log(error)
 	}
 })
 
@@ -68,7 +71,7 @@ app.post('/api/users', async (req,res) => {
 			users.push(user)
 
 		}catch(error){
-			console.log(error.message)
+			console.log(error)
 		}
 	})
 
@@ -105,7 +108,7 @@ app.post('/api/patients', async (req, res) => {
 		const newPatient = await pool.query('INSERT INTO patient (patient_id, name, dob, age, sex, address, phone_number, status_of_insurance, medical_history, citizen_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [patient_id, patient_name, dob, age, sex, address,phone_number,status_of_insurance, medical_history,citizen_id ])
 		res.json(newPatient)
 	}catch(error) {
-		console.log(error.message)
+		console.log(error)
 	}
 })
 
@@ -367,12 +370,12 @@ app.get('/api/medicals', async(req, res) => {
 
 app.post('/api/bills', async (req, res) => {
 	try {
-		console.log(JSON.parse(req.body))
-		const { bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time } = JSON.parse(req.body)
+		console.log(req)
+		const { bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time } = req.body
 		const bill = await pool.query('INSERT INTO bill(bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',[bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time])
 		res.json(bill)
 	}catch(error){
-		console.log(error.message)
+		console.log(error)
 	}
 })
 
