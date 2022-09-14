@@ -367,7 +367,7 @@ app.get('/api/medicals', async(req, res) => {
 
 app.post('/api/bills', async (req, res) => {
 	try {
-		
+		console.log(JSON.parse(req.body))
 		const { bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time } = JSON.parse(req.body)
 		const bill = await pool.query('INSERT INTO bill(bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',[bill_id, appointment_id, patient_id, examination_fee, medicine_fee, discounted_charges, total_charges, date_time])
 		res.json(bill)
