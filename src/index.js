@@ -7,9 +7,9 @@ const pool = require('../src/app/config/db.config')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 console.log(process.env.DB_PORT)
-const port = process.env.DB_PORT || 5000
-app.listen(port, () => {
-	console.log(`The server is running in ${port}`)
+// const port = process.env.DB_PORT || 5000
+app.listen(5432, () => {
+	console.log(`The server is running in 5432`)
 })
 const corsOptions ={
 	origin:'*', 
