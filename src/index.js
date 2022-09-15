@@ -299,7 +299,7 @@ app.get('/api/appointments/:column/:value', async (req, res) => {
 	if(column === 'appointment_id'){
 		try {
 			const newValue = '%' + value + '%'
-			const appointments = await pool.query('SELECT appointment.appointment_id,appointment.end_time, appointment.expected_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment_id LIKE $1', [newValue]);
+			const appointments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.end_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment_id LIKE $1', [newValue]);
 			res.json(appointments.rows)
 		}catch(error) {
 			console.log(error.message)
@@ -307,7 +307,7 @@ app.get('/api/appointments/:column/:value', async (req, res) => {
 	} else if(column === 'specialty') {
 		try {
 				const newValue = '%' + value + '%'
-				const appoinments = await pool.query('SELECT appointment.appointment_id,appointment.end_time, appointment.expected_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND specialty LIKE $1',[newValue]);
+				const appoinments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.end_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND specialty LIKE $1',[newValue]);
 				res.json(appoinments.rows)
 		}catch(error) {
 			console.log(error.message)
@@ -315,7 +315,7 @@ app.get('/api/appointments/:column/:value', async (req, res) => {
 	} else {
 		try {
 			const newValue = '%' + value + '%'
-			const appoinments = await pool.query('SELECT appointment.appointment_id,appointment.end_time, appointment.expected_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment.doctor_id LIKE $1',[newValue]);
+			const appoinments = await pool.query('SELECT appointment.appointment_id,appointment.start_time, appointment.end_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment.doctor_id LIKE $1',[newValue]);
 			res.json(appoinments.rows)
 	}catch(error) {
 		console.log(error.message)
