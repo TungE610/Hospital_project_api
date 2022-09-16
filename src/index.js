@@ -168,7 +168,7 @@ app.get('/api/rooms/:column/:value', async (req, res) => {
 		}catch(error) {
 			console.log("1",error.message)
 		}
-	} else {
+	} else if(column === 'specialty'){
 		try {
 				const newValue = '%' + value + '%'
 				const room = await pool.query('SELECT room.room_id,room.status, num_of_waiting, doctor.doctor_name AS manager ,specialty FROM room, specialty, doctor WHERE room.specialty_id = specialty.specialty_id AND room.manager_id = doctor.doctor_id AND specialty LIKE $1', [newValue]);
@@ -176,6 +176,14 @@ app.get('/api/rooms/:column/:value', async (req, res) => {
 		}catch(error) {
 			console.log("2",error.message)
 		}
+	} else {
+		try {
+			const newValue = '%' + value + '%'
+			const room = await pool.query('SELECT room.room_id,room.status, num_of_waiting, doctor.doctor_name AS manager ,specialty FROM room, specialty, doctor WHERE room.specialty_id = specialty.specialty_id AND room.manager_id = doctor.doctor_id AND specialty LIKE $1', [newValue]);
+			res.json(room.rows)
+	}catch(error) {
+		console.log("2",error.message)
+	}
 	}
 })
 /// get all rooms

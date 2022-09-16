@@ -615,4 +615,4 @@
 -- -- PostgreSQL database dump complete
 -- --
 
-SELECT appointment.appointment_id,appointment.start_time, diagnosis ,specialty.specialty,room_id,patient_id, doctor_id FROM appointment,specialty WHERE appointment.specialty_id = specialty.specialty_id AND appointment.appointment_id = '05030914'
+SELECT * FROM registration;
