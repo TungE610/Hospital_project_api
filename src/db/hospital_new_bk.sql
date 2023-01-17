@@ -1,9 +1,9 @@
--- --
--- -- PostgreSQL database dump
--- --
+--
+-- PostgreSQL database dump
+--
 
--- -- Dumped from database version 14.2
--- -- Dumped by pg_dump version 14.4
+-- Dumped from database version 14.2
+-- Dumped by pg_dump version 14.4
 
 -- SET statement_timeout = 0;
 -- SET lock_timeout = 0;
@@ -611,8 +611,8 @@
 --     ADD CONSTRAINT room_fk_spe FOREIGN KEY (specialty_id) REFERENCES public.specialty(specialty_id);
 
 
--- --
--- -- PostgreSQL database dump complete
--- --
+--
+-- PostgreSQL database dump complete
+--
 
 SELECT * FROM registration;
