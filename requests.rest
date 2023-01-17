@@ -1,5 +1,5 @@
 
-GET https://hospital-project-api.herokuapp.com/api/users
+GET https://hospital-project-api.onrender.com/api/users
 ###
 GET https://hospital-project-api.herokuapp.com/api/users/login
 ###
@@ -35,7 +35,7 @@ POST https://hospital-project-api.herokuapp.com/doctors/delete/20225
 
 ###
 
-GET https://hospital-project-api.herokuapp.com/doctors
+GET https://hospital-project-api.onrender.com/doctors
 
 ###
 

@@ -615,4 +615,4 @@
 -- PostgreSQL database dump complete
 --
 
-SELECT * FROM registration;
+SELECT * FROM doctor;
