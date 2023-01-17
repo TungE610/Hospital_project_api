@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development && node src/index.js",
-    "build": "NODE_ENV=development && react-scripts build",
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eject": "react-scripts eject",
     "pg:init": "pg_ctl init -D data",
